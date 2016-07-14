@@ -1,0 +1,30 @@
+{
+  "name": "babel_plugin",
+  "version": "1.0.0",
+  "description": "babel plugin",
+  "main": "run.js",
+  "scripts": {
+    "test": "node run.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aksana-Tsishchanka/babel_plugin.git"
+  },
+  "keywords": [
+    "babel",
+    "plugin"
+  ],
+  "author": "Aksana_Tolstoguzova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aksana-Tsishchanka/babel_plugin/issues"
+  },
+  "homepage": "https://github.com/Aksana-Tsishchanka/babel_plugin#readme",
+  "dependencies": {
+    "babel-core": "^6.10.4",
+    "babylon": "^6.8.4"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0"
+  }
+}
