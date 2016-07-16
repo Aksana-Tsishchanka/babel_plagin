@@ -22,6 +22,7 @@
   "homepage": "https://github.com/Aksana-Tsishchanka/babel_plugin#readme",
   "dependencies": {
     "babel-core": "^6.10.4",
+    "babel-generator": "^6.11.3",
     "babylon": "^6.8.4"
   },
   "devDependencies": {
