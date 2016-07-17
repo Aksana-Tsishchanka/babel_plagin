@@ -1,26 +1,18 @@
 module.exports = function(babel) {
   var t = babel.types;
-  var isProcessEnvAvailable;
-  var isProcess = false;
-  var isEnv = false;
-
-  if (process.env.NODE_ENV) {
-    isProcessEnvAvailable = true;
-    var envName = 'NODE_ENV';
-  };
 
   return {
     visitor: {
-        Identifier(path) {
-          if (path.node.name == 'process') {
-            isProcess = true;
-
-          } else if (path.node.name == 'env') {
-            isEnv = true;
-          } else if (isEnv && isProcess && isProcessEnvAvailable && path.node !== 'env' ) {
-            path.node.name = envName;
+      MemberExpression(path) {
+          if (t.isIdentifier(path.node.property) && path.node.property.name === 'env'
+              && t.isIdentifier(path.node.object) && path.node.object.name === 'process'
+              && t.isIdentifier(path.parentPath.node.property)) {
+            var envValue = process.env[path.parent.property.name];
+            if (envValue) {
+              path.parentPath.replaceWith(t.stringLiteral(envValue));
+            }
           }
-        }
+      }
     }
-  };
-};
+  }
+}
