@@ -3,7 +3,10 @@ var script = require('./script');
 
 var code = `console.log(process.env.whatever); 
             process.env.whatever=1; 
-            var a = process.env.whatever`;
+            var a = process.env.whatever
+            var b = {}; b[process.env.whatever] = 'test';
+            var c = process.env['whatever'];
+            `;
 
 
 var out = babel.transform(code, {

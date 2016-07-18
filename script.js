@@ -4,14 +4,24 @@ module.exports = function(babel) {
   return {
     visitor: {
       MemberExpression(path) {
-              if (t.isIdentifier(path.node.property) && path.node.property.name === 'env'
-                  && t.isIdentifier(path.node.object) && path.node.object.name === 'process'
-                  && t.isIdentifier(path.parentPath.node.property)) {
-                var envValue = process.env[path.parent.property.name];
-                if (envValue && !t.isAssignmentExpression(path.parentPath.parentPath.node)) {
-                   path.parentPath.replaceWith(t.stringLiteral(envValue));
-                }
+          var firstPart = path.node.object;
+          var secondPart = path.node.property;
+          var thirdPart = path.parentPath.node.property;
+          if (t.isIdentifier(secondPart) && secondPart.name === 'env'
+              && t.isIdentifier(firstPart) && firstPart.name === 'process'
+              && (t.isIdentifier(thirdPart) || t.isStringLiteral(thirdPart))) {
+              var envValue;
+
+              if (t.isStringLiteral(thirdPart)) {
+                  envValue = process.env[thirdPart.value];
               }
+              else {
+                  envValue = process.env[thirdPart.name];
+              }
+              if (envValue && !t.isAssignmentExpression(path.parentPath.parentPath.node)) {
+                  path.parentPath.replaceWith(t.stringLiteral(envValue));
+              }
+          }
       }
     }
   }
